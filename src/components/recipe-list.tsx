@@ -86,6 +86,7 @@ export default async function RecipeList(props: RecipeListProps) {
     return (
         <div className="flex flex-col gap-4 w-full">
         {recipes?.map((recipe) => (
+
             <details key={recipe.id} className="group border rounded-lg shadow-sm bg-white overflow-hidden w-full">
             {/* The summary is the "Header" that is always visible */}
             <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 list-none w-full">

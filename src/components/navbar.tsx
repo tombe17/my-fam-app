@@ -31,25 +31,30 @@ export default async function Navbar() {
             </div>
 
             {/* Mobile Menu Button - Visible on mobile, hidden on md+ */}
-            <details className="md:hidden group relative">
-                <summary className="list-none flex justify-between items-center cursor-pointer">
-                    <div className="p-2 border rounded-md">
-                        {/* Simple CSS-only Hamburger Icon */}
-                        <span className="block w-5 h-0.5 bg-black mb-1 group-open:rotate-45 group-open:translate-y-1.5 transition-all"></span>
-                        <span className="block w-5 h-0.5 bg-black mb-1 group-open:opacity-0 transition-all"></span>
-                        <span className="block w-5 h-0.5 bg-black group-open:-rotate-45 group-open:-translate-y-1.5 transition-all"></span>
-                    </div>
-                </summary>
-                
-                <div className="flex flex-col mt-16 space-y-3 bg-gray-50 p-4 rounded-lg shadow-xl z-20">
-                    <a href="/" className="hover:text-blue-600">Home</a>
-                    <a href="/protected/recipes" className="hover:text-blue-600">Recipes</a>
-                    <hr />
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <AuthButton />
-                    </Suspense>
+            <div className="md:hidden">
+            <input type="checkbox" id="menu-toggle" className="peer hidden" name="mobile-menu-state" aria-hidden="true"/>
+            <label htmlFor="menu-toggle" className="md:hidden p-2 cursor-pointer z-50 relative">
+                <div className="p-2 border rounded-md">
+                    {/* Simple CSS-only Hamburger Icon */}
+                    <span className="block w-5 h-0.5 bg-black mb-1 group-open:rotate-45 group-open:translate-y-1.5 transition-all"></span>
+                    <span className="block w-5 h-0.5 bg-black mb-1 group-open:opacity-0 transition-all"></span>
+                    <span className="block w-5 h-0.5 bg-black group-open:-rotate-45 group-open:-translate-y-1.5 transition-all"></span>
                 </div>
-            </details>
+            </label>
+            <label 
+                htmlFor="menu-toggle" 
+                className="fixed inset-0 backdrop-blur-sm z-40 hidden peer-checked:block md:peer-checked:hidden"
+            />
+            
+            <div className="hidden peer-checked:flex md:hidden flex-col absolute left-0 right-0 bg-gray-50 shadow-xl p-6 z-50 gap-4">
+                <a href="/" className="hover:text-blue-600">Home</a>
+                <a href="/protected/recipes" className="hover:text-blue-600">Recipes</a>
+                <hr />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <AuthButton />
+                </Suspense>
+            </div>
+            </div>
         </div>
     </nav>
     );
