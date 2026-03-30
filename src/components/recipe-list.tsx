@@ -19,6 +19,17 @@ interface Recipe {
   user_id_creator: string;
 }
 
+const formatTime = (totalMinutes: number) => {
+  if (!totalMinutes) return "0 mins";
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+    // If at least 60 min, use x h y m, else just y m
+  if (hours > 0) {
+    return `${hours}h ${minutes > 0 ? `${minutes}m` : ""}`.trim();
+  }
+  return `${minutes}m`;
+};
+
 export default async function RecipeList(props: RecipeListProps) {
     const supabase = await createClient();
     //get user (for favorites)
@@ -95,10 +106,11 @@ export default async function RecipeList(props: RecipeListProps) {
                     <h1 className="text-xl font-semibold">{recipe.recipe_title}</h1>
                 </div>
                 <FavoriteButton userId={user?.id} recipeId={recipe.id} />
-                <p className="text-gray-600 text-sm">Cook Time: {recipe.cooking_time} mins</p>
+                <p className="hidden md:flex text-gray-600 text-sm">Cook Time: {formatTime(recipe.cooking_time)}</p>
             </summary>
 
             <div className="border p-4 rounded-lg shadow-sm relative pb-12">
+                <h4 className="md:hidden font-semibold text-lg mb-2">Cook Time: {formatTime(recipe.cooking_time)}</h4>
                 <h4 className="font-semibold text-lg mb-2">Ingredients:</h4>
                 <ul className="list-disc pl-5 space-y-1 mb-2">
                     {recipe.ingredients.split('\n').map((ingredient: string, index: number) => (
